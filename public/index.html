@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <!-- 
+    1. Request a user's GitHub identity
+    GET https://github.com/login/oauth/authorize
+ -->
+    <head>
+        <title>Auth Test</title>
+    </head>
+    <body>
+        <main>
+            <a id="oauth" href="">Login</a>
+        </main>
+    </body>
+    <script>
+        let URL = 'https://github.com/login/oauth/authorize';
+        let options = {
+            client_id : 'f8c40612cb8ae23a185d',
+            redirect_uri: 'http://localhost:3000/oauth'
+        }
+
+        // url?client_id=value&redirect_uri=value
+        let queryString = Object.keys(options).map((key)=> {
+            return `${key}=` + encodeURIComponent(options[key])
+        }).join('&');
+        let authUrl = `${URL}?${queryString}`;
+
+        let link = document.getElementById('oauth');
+        link.setAttribute('href', authUrl);
+        
+    </script>
+</html>

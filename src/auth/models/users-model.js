@@ -18,8 +18,9 @@ class Model {
         return insertData;
     }
 
-    async read() {
-        return await Users.find();
+    async read(username) {
+        let name = username ? username : {};
+        return await Users.find(name);
     }
 
     async authenticateBasic(username, pass) {
