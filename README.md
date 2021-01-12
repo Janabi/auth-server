@@ -67,3 +67,39 @@
 
 ### UML
 ![UML Lab 11](./uml/uml-lab-12.png)
+
+
+## Lab 13
+
+### Description of today lab
+**Today we create a login system with base-64, bcrypt and authenticate the user. Also, we are accessing the user info using the client github account. Also, we used the bearer middleware to get the user permission to acces all website routes while the user logged in.**
+
+### Pull Request
+- [PR3](https://github.com/Janabi/auth-server/pull/3)
+- [PR4 with README file](https://github.com/Janabi/auth-server/pull/4)
+
+### Dependencies
+- base-64
+- bcrypt
+- express
+- @code-fellows/supergoose
+- jest
+- jest-cli
+- dotenv
+- nodemon
+- jsonwebtoken
+- superagent
+
+### How to start the server
+- node index.js
+- nodemon / npx nodemon
+
+### What should I urn on the terminal or postman?
+- POST: http://localhost:3000/signup
+- POST: http://localhost:3000/signin
+- GET: http://localhost:3000/users
+- GET: http://localhost:3000/oauth
+- GET: http://localhost:3000/secret
+
+### UML
+![UML Lab 11](./uml/uml-lab-13.png)
