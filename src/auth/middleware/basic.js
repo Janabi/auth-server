@@ -21,6 +21,7 @@ module.exports = (req, res, next)=>{
     users.authenticateBasic(user, password).then(verified=>{
         users.generateToken(user).then(generatedToken=>{
             req.token = generatedToken;
+            req.username = user;
             next();
         })
         .catch(err=> next('error in Token!'))

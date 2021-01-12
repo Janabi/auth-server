@@ -5,12 +5,13 @@ const users = require('./models/users-model');
 const authBasic = require('./middleware/basic')
 const oauth = require('./middleware/oauth')
 
+
 const router = express.Router();
 
 
 router.post('/signup', (req, res, next)=>{
     users.create(req.body).then(user=>{
-        users.generateToken(user).then(result=>{
+        users.generateToken(user.username).then(result=>{
             
             res.status(200).send(result);
         })
@@ -23,7 +24,7 @@ router.post('/signin', authBasic, (req, res, next) =>{
     res.set('token', req.token);
     //add cookie
     res.cookie('token', req.token);
-    res.status(200).send(req.token);
+    res.status(200).send({token: req.token, user: req.username});
 });
 
 router.get('/oauth', oauth, (req, res)=> {
@@ -36,5 +37,7 @@ router.get('/users', (req, res, next)=>{
         res.status(200).json(result);
     })
 });
+
+
 
 module.exports = router;
