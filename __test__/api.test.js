@@ -21,8 +21,17 @@ describe('Checking the api routes', ()=>{
             password: 'user1234'
         }
         return await mockRequest.post('/signup').send(user).then(record=>{
-            console.log(record.username);
             expect(record.status).toEqual(200);
+        })
+    })
+
+    it('give 404 error if we insert a non existing route', async()=>{
+        let user = {
+            username: 'user1',
+            password: 'user1234'
+        }
+        return await mockRequest.post('/sigup').send(user).then(record=>{
+            expect(record.status).toEqual(404);
         })
     })
 
@@ -46,6 +55,34 @@ describe('Checking the api routes', ()=>{
         return await mockRequest.post('/signup').send(user).then(async (record)=>{
             return await mockRequest.get('/users').then(data=>{
                 expect(data.status).toEqual(200);
+            })
+        })
+    })
+
+    it('authorize into any route after the user logged in', async()=>{
+        let user = {
+            username: 'user1',
+            password: 'user1234'
+        }
+        return await mockRequest.post('/signup').send(user).then(async (record)=>{
+            return await mockRequest.post('/signin').auth(user.username, user.password).then(async (data)=>{
+                return await mockRequest.get('/secret').set({'Authorization': `Bearer ${data.body.token}`}).then(result=>{
+                    expect(result.status).toEqual(200);
+                })
+            })
+        })
+    })
+
+    it('not authorize (error500) into any route after a fake user logged in', async()=>{
+        let user = {
+            username: 'user1',
+            password: 'user1234'
+        }
+        return await mockRequest.post('/signup').send(user).then(async (record)=>{
+            return await mockRequest.post('/signin').auth('user', user.password).then(async (data)=>{
+                return await mockRequest.get('/secret').set({'Authorization': `Bearer ${data.body.token}`}).then(result=>{
+                    expect(result.status).toEqual(500);
+                })
             })
         })
     })

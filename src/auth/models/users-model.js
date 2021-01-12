@@ -32,8 +32,24 @@ class Model {
     }
 
     async generateToken(user) {
-        let token = await jwt.sign({username: user}, SECRET);
+        let token = await jwt.sign({exp: Math.floor(Date.now() / 1000) + (60 * 15), username: user}, SECRET);
         return token;
+    }
+
+    async authenticateToken(token) {
+        try {
+            let tokenObj = await jwt.verify(token, SECRET);
+            console.log("token obejct >>>>>>",tokenObj)
+            let checkObj = await Users.find({username: tokenObj.username});
+            console.log("Checking the token", checkObj);
+            if(checkObj) {
+                return Promise.resolve(tokenObj);
+            } else {
+                return Promise.reject();
+            }
+        } catch(err) {
+            return Promise.reject();
+        }
     }
 }
 
