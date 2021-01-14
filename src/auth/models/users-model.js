@@ -12,6 +12,7 @@ class Model {
         let newRecord = new Object();
         newRecord.username = record.username;
         newRecord.password = await bcrypt.hash(record.password, 5);
+        newRecord.role = record.role;
         console.log("new record ----", newRecord)
         let insertedRecord = new Users(newRecord);
         let insertData = await insertedRecord.save();
@@ -23,6 +24,10 @@ class Model {
         return await Users.find(name);
     }
 
+    async update(id) {
+        let recordUpdated = await Users.findByIdAndUpdate({})
+    }
+
     async authenticateBasic(username, pass) {
         let user = await Users.findOne({username});
         if (user) {
@@ -32,7 +37,7 @@ class Model {
     }
 
     async generateToken(user) {
-        let token = await jwt.sign({exp: Math.floor(Date.now() / 1000) + (60 * 15), username: user}, SECRET);
+        let token = await jwt.sign({exp: Math.floor(Date.now() / 1000) + (60 * 15), role: user.role,username: user.username}, SECRET);
         return token;
     }
 
