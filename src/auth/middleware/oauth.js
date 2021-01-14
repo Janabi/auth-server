@@ -53,7 +53,8 @@ async function getRemoteUserInfo(token) {
 async function getUser(userObj) {
     let userRecord = {
         username: userObj.login,
-        password: 'ouathpass'
+        password: 'ouathpass',
+        role: 'user'
     };
     let isUserExist = await users.read({username: userRecord.username});
     if(isUserExist.length > 0) {

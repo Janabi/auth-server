@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post('/signup', (req, res, next)=>{
     users.create(req.body).then(user=>{
-        users.generateToken(user.username).then(result=>{
+        users.generateToken(user).then(result=>{
             
             res.status(200).send(result);
         })
