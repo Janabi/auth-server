@@ -18,9 +18,9 @@ module.exports = (req, res, next)=>{
     let basic = authHeader.pop();
     let [user, password] = base64.decode(basic).split(":");
     console.log(user,password);
-    users.authenticateBasic(user, password).then(verified=>{
-        let userAccount = users.read(user);
-        users.generateToken(userAccount).then(generatedToken=>{
+    users.authenticateBasic(user, password).then(async (verified)=>{
+        let userAccount = await users.read(user);
+        users.generateToken(userAccount[0]).then(generatedToken=>{
             req.token = generatedToken;
             req.username = user;
             next();

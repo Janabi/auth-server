@@ -20,16 +20,14 @@ class Model {
     }
 
     async read(username) {
-        let name = username ? username : {};
+        let name = username ? {username} : {};
+        console.log("name >>>>>", name);
         return await Users.find(name);
-    }
-
-    async update(id) {
-        let recordUpdated = await Users.findByIdAndUpdate({})
     }
 
     async authenticateBasic(username, pass) {
         let user = await Users.findOne({username});
+        console.log("Account>>>>>>>", user)
         if (user) {
             return await bcrypt.compare(pass, user.password);
         }
@@ -37,7 +35,8 @@ class Model {
     }
 
     async generateToken(user) {
-        let token = await jwt.sign({exp: Math.floor(Date.now() / 1000) + (60 * 15), role: user.role,username: user.username}, SECRET);
+        console.log("username>>>> ", user.username)
+        let token = await jwt.sign({exp: Math.floor(Date.now() / 1000) + (60 * 15), username: user.username, role: user.role}, SECRET);
         return token;
     }
 
