@@ -14,6 +14,8 @@ module.exports = (capability) =>{
         try {
             if(roles[req.user.role].includes(capability)) {
                 next();
+            } else {
+                throw new Error("Access Denied!!");
             }
         } catch(err) {
             next('Access Denied!!')
