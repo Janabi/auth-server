@@ -111,7 +111,10 @@
 **Today we create a login system with base-64, bcrypt and authenticate the user. Also, we are accessing the user info using the client github account. Also, we used the bearer middleware to get the user permission to acces all website routes while the user logged in. Also, I applied the CRUD methods based on the user's role.**
 
 ### Pull Request
-- [PR5](https://github.com/Janabi/auth-server/pull/5)
+- [PR6](https://github.com/Janabi/auth-server/pull/6)
+
+### Deploy
+- [Auth Server App](https://auth-servers.herokuapp.com)
 
 ### Dependencies
 - base-64
