@@ -15,7 +15,7 @@ app.use(extraRoute);
 module.exports = {
     server: app,
     start: ()=>{
-        let PORT = process.env.PORT;
+        let PORT = process.env.PORT || 4000;
         app.listen(PORT, ()=>{
             console.log(`Listening on ${PORT}`);
         })
